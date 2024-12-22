@@ -46,8 +46,78 @@ class Tree {
     }
     prettyPrint(this.root)
   }
+
+  delete(data) {
+    let node = this.root;
+    if (data == node.data) {
+      let newNode = this.getSuccessor(node)
+      this.delete(newNode.data);
+      node.data = newNode.data;
+    } else {
+      while(true) {
+        if (data > node.data) {
+          if (node.right.data == data) {
+            if (node.right.right == null && node.right.left == null) {
+              node.right = null
+              break
+            }
+            if (node.right.right == null) {
+              node.right = node.right.left;
+              break
+            }
+            if (node.right.left == null) {
+              node.right = node.right.right
+              break
+            } else {
+              let newNode = this.getSuccessor(node.right)
+              this.delete(newNode.data);
+              node.right.data = newNode.data
+              break
+            }
+          }
+          node = node.right
+        } else if (data < node.data) {
+          if (node.left.data == data) {
+            if (node.left.right == null && node.left.left == null) {
+              node.left = null
+              break
+            }
+            if (node.left.right == null) {
+              node.left = node.left.left;
+              break
+            }
+            if (node.left.left == null) {
+              node.left = node.left.right
+              break
+            } else {
+              let newNode = this.getSuccessor(node.left)
+              this.delete(newNode.data);
+              node.left.data = newNode.data;
+              break;
+            }
+          }
+          node = node.left
+        }
+      }
+    }
+    prettyPrint(this.root);
+  }
+  
+  getSuccessor(node) {
+    let newNode = node.right;
+    while (newNode !== null && newNode.left !== null) {
+      newNode = newNode.left;
+    }
+    return newNode;
+  }
 }
 
-let t = new Tree(arr);
-t.insert(30);
-t.insert(10);
+let testArr = [2, 3, 4, 5, 6, 7, 8]
+let t = new Tree(testArr);
+// t.insert(30);
+t.insert(5.5);
+// t.delete(8)
+// t.delete(2)
+t.delete(5)
+t.insert(5);
+t.delete(3)
