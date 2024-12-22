@@ -32,8 +32,6 @@ class Tree {
         if (node.right == null) {
           node.right = new Node();
           node.right.data = data;
-          node.right.right = null;
-          node.right.left = null;
           break;
         }
         node = node.right;
@@ -41,8 +39,6 @@ class Tree {
         if (node.left == null) {
           node.left = new Node();
           node.left.data = data;
-          node.left.right = null;
-          node.left.left = null;
           break;
         }
         node = node.left;
