@@ -14,6 +14,12 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
 };
 
+function cb(node) {//callback
+  let data = node.data
+  data *= 2;
+  console.log(data)
+}
+
 let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 let res = buildTree(arr, 0, arr.length-1)
 //prettyPrint(res);
@@ -116,7 +122,26 @@ class Tree {
       }
     }
   }
-  
+
+  levelOrder(callBack) {
+    let node = this.root;
+    let q = new Queue()
+    q.enqueue(node);
+    while(q.isEmpty() == false) {
+      let n = q.dequeue();
+      let left, right;
+      if (n.left != null) {
+        left = n.left;
+        q.enqueue(left);
+      }
+      if (n.right != null) {
+        right = n.right;
+        q.enqueue(right);
+      }
+      callBack(n)
+    }
+  }
+
   getSuccessor(node) {
     let newNode = node.right;
     while (newNode !== null && newNode.left !== null) {
@@ -125,6 +150,36 @@ class Tree {
     return newNode;
   }
 }
+
+class Queue {
+  constructor() {
+    this.items = [];
+  }
+
+  // Enqueue: Add element to the queue
+  enqueue(element) {
+    this.items.push(element);
+  }
+
+  // Dequeue: Remove and return the first element from the queue
+  dequeue() {
+    if (this.isEmpty()) {
+      return "Queue is empty";
+    }
+    return this.items.shift(); // Removes and returns the first element
+  }
+
+  // Check if the queue is empty
+  isEmpty() {
+    return this.items.length === 0;
+  }
+
+  // Get the size of the queue
+  size() {
+    return this.items.length;
+  }
+}
+
 
 let testArr = [2, 3, 4, 5, 6, 7, 8]
 let t = new Tree(testArr);
@@ -137,3 +192,4 @@ t.insert(5);
 t.delete(3)
 let node = t.find(7)
 console.log(node)
+t.levelOrder(cb);
