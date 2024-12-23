@@ -16,7 +16,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 function cb(node) {//callback
   let data = node.data
-  data *= 2;
+  //data *= 2;
   console.log(data)
 }
 
@@ -142,6 +142,48 @@ class Tree {
     }
   }
 
+  inOrder(callBack) {
+    let node = this.root;
+    function recur(node) {
+      if (node.left != null) {
+        recur(node.left)
+      }
+      callBack(node)
+      if (node.right != null) {
+        recur(node.right)
+      }
+    }
+    recur(node)
+  }
+
+  preOrder(callBack) {
+    let node = this.root;
+    function recur(node) {
+      callBack(node)
+      if (node.left != null) {
+        recur(node.left)
+      }
+      if (node.right != null) {
+        recur(node.right)
+      }
+    }
+    recur(node)
+  }
+
+  postOrder(callBack) {
+    let node = this.root;
+    function recur(node) {
+      if (node.left != null) {
+        recur(node.left)
+      }
+      if (node.right != null) {
+        recur(node.right)
+      }
+      callBack(node)
+    }
+    recur(node)
+  }
+
   getSuccessor(node) {
     let newNode = node.right;
     while (newNode !== null && newNode.left !== null) {
@@ -193,3 +235,6 @@ t.delete(3)
 let node = t.find(7)
 console.log(node)
 t.levelOrder(cb);
+t.inOrder(cb);
+t.preOrder(cb);
+t.postOrder(cb);
