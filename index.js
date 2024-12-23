@@ -103,6 +103,20 @@ class Tree {
     prettyPrint(this.root);
   }
   
+  find(data) {
+    let node = this.root
+    while (true) {
+      if (node == null) return null
+      if (node.data == data) return node;
+      if (data > node.data) {
+        node = node.right
+      }
+      if (data < node.data) {
+        node = node.left
+      }
+    }
+  }
+  
   getSuccessor(node) {
     let newNode = node.right;
     while (newNode !== null && newNode.left !== null) {
@@ -121,3 +135,5 @@ t.insert(5.5);
 t.delete(5)
 t.insert(5);
 t.delete(3)
+let node = t.find(7)
+console.log(node)
