@@ -184,6 +184,27 @@ class Tree {
     recur(node)
   }
 
+  height(node) {
+    let count = 0;
+    let max = 0;
+    function recur(node, count) {
+      count++
+      if (node.left == null && node.right == null) {
+        if (count > max)
+          max = count 
+      } else {
+        if (node.left != null) {
+          recur(node.left, count)
+        }
+        if (node.right != null) {
+          recur(node.right, count)
+        }
+      }
+    }
+    recur(node, count);
+    return max
+  }
+
   getSuccessor(node) {
     let newNode = node.right;
     while (newNode !== null && newNode.left !== null) {
@@ -229,12 +250,15 @@ let t = new Tree(testArr);
 t.insert(5.5);
 // t.delete(8)
 // t.delete(2)
-t.delete(5)
-t.insert(5);
+//t.delete(5)
+//t.insert(5);
 t.delete(3)
 let node = t.find(7)
 console.log(node)
-t.levelOrder(cb);
-t.inOrder(cb);
-t.preOrder(cb);
-t.postOrder(cb);
+// t.levelOrder(cb);
+// t.inOrder(cb);
+// t.preOrder(cb);
+// t.postOrder(cb);
+let r = t.find(5);
+let height = t.height(r)
+console.log(height)
